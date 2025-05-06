@@ -1,18 +1,135 @@
 <!DOCTYPE html>
 <html lang="es">
-<!-- [El head y los estilos se mantienen igual que en la versión anterior] -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres Salir Conmigo?</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff69b4, #4ecdc4);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
 
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #333;
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            animation: rainbow 5s infinite;
+        }
+
+        @keyframes rainbow {
+            0% { color: #ff0000; }
+            25% { color: #ff69b4; }
+            50% { color: #9400d3; }
+            75% { color: #4b0082; }
+            100% { color: #ff0000; }
+        }
+
+        .buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #siBtn {
+            background-color: #2ecc71;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        #noBtn {
+            background-color: #e74c3c;
+            color: white;
+            position: relative;
+        }
+
+        .heart {
+            position: fixed;
+            font-size: 24px;
+            pointer-events: none;
+            animation: float 3s ease-in infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .firework {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .jumpscare {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            color: #ff0000;
+            text-shadow: 0 0 20px #ff0000;
+            z-index: 1000;
+        }
+
+        .credits {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .credits a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
 <body>
-    <div class="floating-hearts"></div>
     <div class="container">
-        <h1>¿Quieres Salir Conmigo? 💝</h1>
+        <h1>¿Quieres Salir Conmigo? 💕</h1>
         <div class="buttons">
-            <button id="siBtn" class="btn">Sí ❤️</button>
-            <button id="noBtn" class="btn">No 💔</button>
+            <button id="siBtn" class="btn">Sí</button>
+            <button id="noBtn" class="btn">No</button>
         </div>
     </div>
 
-    <div class="jumpscare">¡Me haces muy feliz! 💖</div>
+    <div class="jumpscare">¡LOS TRALALERITOS DICEN TRALALAAA!</div>
 
     <div class="credits">
         <p>La página no la hizo <a href="https://www.instagram.com/el_wawin_" target="_blank">@el_wawin_</a></p>
@@ -25,21 +142,6 @@
         let clickCount = 0;
         let siStage = 0;
 
-        // Función para crear corazones flotantes iniciales
-        function createFloatingHearts() {
-            const colors = ['#ff69b4', '#ff1493', '#ff8da1', '#ffc0cb'];
-            for(let i = 0; i < 20; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'heart';
-                heart.innerHTML = '💖';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDelay = Math.random() * 5 + 's';
-                heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
-                document.querySelector('.floating-hearts').appendChild(heart);
-            }
-        }
-
-        // Función para mover el botón No
         noBtn.addEventListener('click', () => {
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
@@ -51,43 +153,39 @@
             siBtn.style.transform = `scale(${1 + (clickCount * 0.2)})`;
         });
 
-        // Función para el botón Sí
         siBtn.addEventListener('click', () => {
             siStage++;
             if (siStage === 1) {
                 siBtn.textContent = '¿Enserio? 😊';
-                siBtn.style.background = 'linear-gradient(45deg, #ff1493, #ff69b4)';
+                siBtn.style.backgroundColor = '#9b59b6';
                 showJumpscare();
             } else if (siStage === 2) {
-                siBtn.textContent = '¡Te quiero! 💖';
-                siBtn.style.background = 'linear-gradient(45deg, #ff69b4, #ff8da1)';
+                siBtn.textContent = 'Ok 👍';
+                siBtn.style.backgroundColor = '#f1c40f';
                 createFireworks();
                 createHearts();
             }
         });
 
-        // Función para mostrar el jumpscare
         function showJumpscare() {
             const jumpscare = document.querySelector('.jumpscare');
             jumpscare.style.display = 'block';
             setTimeout(() => {
                 jumpscare.style.display = 'none';
-            }, 1500);
+            }, 1000);
         }
 
-        // Función para crear corazones
         function createHearts() {
             setInterval(() => {
                 const heart = document.createElement('div');
                 heart.className = 'heart';
-                heart.innerHTML = ['💖', '💝', '💕', '💗', '💓'][Math.floor(Math.random() * 5)];
+                heart.innerHTML = '❤️';
                 heart.style.left = Math.random() * 100 + 'vw';
                 document.body.appendChild(heart);
                 setTimeout(() => heart.remove(), 3000);
             }, 100);
         }
 
-        // Función para crear fuegos artificiales
         function createFireworks() {
             setInterval(() => {
                 const firework = document.createElement('div');
@@ -125,9 +223,6 @@
                 requestAnimationFrame(animate);
             }, 50);
         }
-
-        // Iniciar los corazones flotantes cuando se carga la página
-        window.onload = createFloatingHearts;
     </script>
 </body>
 </html>
